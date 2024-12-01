@@ -1,14 +1,29 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Alistirma.Data;
+using Alistirma.Infrastructure.Repository;
+using Microsoft.AspNetCore.DataProtection.Repositories;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Alistirma.Controllers
 {
 
-    public class RabbitConsumer : Controller
+    public class RabbitConsumerController : ControllerBase
     {
-        public IActionResult Index()
+        private readonly IUserRepository _userRepository;
+        public RabbitConsumerController(IUserRepository userRepository)
         {
-         
-            return View();
+            _userRepository = userRepository;
+        }
+
+
+        [HttpGet]
+        public IActionResult Get()
+        {
+            User user = new User();
+            user.Name = "Teasdasdsadst";
+            user.Email = "asdasdsada";
+            user.Password = "asdasdsadasdadsda";
+            _userRepository.Add(user);
+            return Ok();
         }
     }
 }

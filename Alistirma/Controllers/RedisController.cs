@@ -1,4 +1,6 @@
 ﻿using Alistirma.Caching;
+using Alistirma.Data;
+using Alistirma.Infrastructure.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Alistirma.Controllers
@@ -8,15 +10,21 @@ namespace Alistirma.Controllers
     public class RedisController : ControllerBase
     {
         private readonly ICacheManager _redisCacheService;
+        private readonly IUserRepository _userRepository;
 
-        public RedisController(ICacheManager redisCacheService)
+        public RedisController(ICacheManager redisCacheService, IUserRepository userRepository)
         {
             _redisCacheService = redisCacheService;
+            _userRepository = userRepository;
         }
         [HttpPost("cache/{key}")]
         public async Task<IActionResult> Get(string key)
         {
-            throw new Exception();
+            User user = new User();
+            user.Name = "Teasdasdsadstasdasdas";
+            user.Email = "asdasdsada";
+            user.Password = "asdasdsadasdadsda";
+            _userRepository.Add(user);
             return Ok(await _redisCacheService.GetValueAsync(key));
         }
 

@@ -21,6 +21,7 @@ namespace MVCProject.Controllers
             user.Password = "qsdsad";
             user.Email = "asdsadsadas";
             user.Name = "asdasdasda";
+            
             return View();
         }
 

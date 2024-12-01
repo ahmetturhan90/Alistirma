@@ -14,23 +14,15 @@ namespace Alistirma.Infrastructure.DataContext
 {
     public class TestDbContext:DbContext
     {
-        public readonly IConfiguration _configuration;
 
-        public TestDbContext(IConfiguration configuration)
+
+        public TestDbContext(DbContextOptions<TestDbContext> dbContextOptions)
+            : base(dbContextOptions)
         {
-            _configuration = configuration;
         }
 
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(_configuration.GetConnectionString("TestDbContext"));
-
-
-
-            base.OnConfiguring(optionsBuilder);
-        }
-
+      
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

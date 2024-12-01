@@ -1,7 +1,11 @@
 using Alistirma;
 using Alistirma.Caching;
+using Alistirma.Infrastructure.DataContext;
+using Alistirma.Infrastructure.Repository;
 using Alistirma.Queue;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.DataProtection.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using StackExchange.Redis;
 using System.Text;
@@ -56,8 +60,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 });
 
 #endregion
+#region Repository
+builder.Services.AddDbContext<TestDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("TestDbContext")));
+builder.Services.AddScoped<DbContext, TestDbContext>();
 
 
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+#endregion
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -8,13 +8,8 @@ using System.Threading.Tasks;
 
 namespace Alistirma.Business.Concrete
 {
-    public class UserService : IUserService
+    public class UserService
     {
 
-       public UserService()
-        {
-
-        }
-      
     }
 }
